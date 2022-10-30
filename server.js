@@ -24,10 +24,18 @@
     app.use(express.json())
     app.use(methodOverride('_method'))    
 
-    //Launch web server
+    // //Launch web server
+    // try {
+    //     app.listen(3002,'0.0.0.0')
+    // } catch (error){
+    //     console.log(error.message)
+    // }
+        
+    // start the server listening for requests
     try {
-        app.listen(3002,'0.0.0.0')
-    } catch (error){
+        app.listen(process.env.PORT || 3000, 
+	    () => console.log("Server is running..."));
+    } catch (error) {
         console.log(error.message)
     }
         
