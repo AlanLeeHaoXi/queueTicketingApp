@@ -15,3 +15,4 @@ In the counter management view,
 - Counter manager can mark the current ticket serve in the counter as complete via by clicking on the button "Complete Current"
 - Counter manager can set counter online or offline by clicking on the button "Go Online/Offline"
 - link: https://queue-ticketing-app.herokuapp.com/counter_management_view
+asd
