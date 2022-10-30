@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Queue Ticketing App</title>
+    <link rel="stylesheet" href="/public/assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- Alert message to notify user -->
+    <% if (locals.message != null) { %>
+        <div class="alert alert-danger py-2"><strong><%= message %></strong></div>
+    <% } %>
+
+    <div class="container" style="width: 100%;margin-top: 50px;">
+        <h3>Customer View</h3>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card mx-auto" style="width: 55%;">
+                    <div class="card-body">
+                        <div class="row">
+                            <form action="/customer_view/customertakeNumber" method="POST">
+                                <div class="col text-center">
+                                    <div class="row">
+                                        <div class="col"><label class="col-form-label">Now Serving:</label></div>
+                                    <% if (locals.ticketServingCurrNumber != null) { %>
+                                        <div class="col"><input class="form-control-plaintext" type="text" value="<%= ticketServingCurrNumber %>" readonly=""></div>
+                                    <% } else { %> 
+                                        <div class="col"><input class="form-control-plaintext" type="text" value="0" readonly=""></div>
+                                    <% } %>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col"><label class="col-form-label">Last Number:</label></div>
+                                        <div class="col"><input class="form-control-plaintext" type="text" value="<%= ticketServingLastNumber %>" readonly=""></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col"><button class="btn btn-primary btn-sm" type="submit">Take a Number</button></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row text-center" style="margin-top: 20px;">
+            <% if (locals.counter != null) { %>
+                <% for (let i=0 ; i<counter.length; i++) { %> 
+                <div class="col">
+                            <% if (counter[i].counterStatus == 'offline') {%>
+                                <div class="card" id="cardCounter1" style="background: #b5b4b4;">
+                                    <div class="card-body">
+                                        <div id="circleCounter1" style="background: #838383;border-radius: 50%;width: 15px;height: 15px;margin-left: 93%;"></div>
+                                        <h4 class="card-title" disabled>Counter <%= counter[i].counterNum %></h4>
+                                        <input class="form-control-plaintext" type="text" value="Offline" readonly="" disabled>
+                                    </div>
+                                </div>
+
+                            <% } else if (counter[i].counterStatus == 'online') { %>
+                                <div class="card" id="cardCounter1">
+                                    <div class="card-body">
+                                        <div id="circleCounter1" style="background: #2be928;border-radius: 50%;width: 15px;height: 15px;margin-left: 93%;"></div>
+                                        <h4 class="card-title" >Counter <%= counter[i].counterNum %></h4>
+                                        <input class="form-control-plaintext" type="text" value="Available" readonly="">
+                                    </div>
+                                </div>
+
+                            <% } else if (counter[i].counterStatus == 'busy') { %>
+                                <div class="card" id="cardCounter1" >
+                                    <div class="card-body">    
+                                        <div id="circleCounter1" style="background: #ee1818ea;border-radius: 50%;width: 15px;height: 15px;margin-left: 93%;"></div>
+                                        <h4 class="card-title" >Counter <%= counter[i].counterNum %></h4>
+                                        <input class="form-control-plaintext" type="text" value="<%= counter[i].ticketServing %>" readonly="">
+                                    </div>
+                                </div>  
+                            <% } %>
+                </div>
+                <% } %>
+            <% } %>
+            
+        </div>
+    </div>
+
+    <form id="customer_view_refresh" action="/customer_view" method="GET"></form>
+
+    <script src="/public/assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--Refresh customer view in interval-->
+    <script>
+    setInterval(refresh, 2000);
+    function refresh() {
+        document.getElementById("customer_view_refresh").submit();
+    }
+    </script>
+</body>
+
+</html>
