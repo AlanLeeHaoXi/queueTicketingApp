@@ -33,7 +33,7 @@ router.get("/customer_view", async (request, response) => {
          ticketServingLastNumber : ticketServingLastNumber,
          message : null
       })
-   } catch (err) {
+   } catch (err) {das
       response.status(403).json("" + err)
    }
 })
