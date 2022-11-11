@@ -5,7 +5,7 @@ A simple ticket counter website with with two separate views one for the custome
 
 ## Customer View 
 In the customer view, 
-- Customer can get in queue by clicking on the button "Take A Number". 
+- Customer can get in queue by clicking on the button "Take Ticket". 
 - Customer can also view the current status of the counter and queue.
 - link: https://queue-ticketing-app.herokuapp.com/customer_view
 
