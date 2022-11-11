@@ -35,11 +35,12 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col"><label class="col-form-label">Last Number:</label></div>
+                                        <div class="col"><label class="col-form-label">Last Ticket:</label></div>
                                         <div class="col"><input class="form-control-plaintext" type="text" value="<%= ticketServingLastNumber %>" readonly=""></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col"><button class="btn btn-primary btn-sm" type="submit">Take a Number</button></div>
+                                        <div class="col text-right"><button class="btn btn-primary btn-sm" type="submit" name="ticketCategory" value="low" >Take Normal Ticket</button></div>
+                                        <div class="col text-left"><button class="btn btn-primary btn-sm" type="submit" name="ticketCategory" value="premium">Take Premium Ticket</button></div>
                                     </div>
                                 </div>
                             </form>
@@ -58,7 +59,11 @@
                                 <div class="card" id="cardCounter1" style="background: #b5b4b4;">
                                     <div class="card-body">
                                         <div id="circleCounter1" style="background: #838383;border-radius: 50%;width: 15px;height: 15px;margin-left: 93%;"></div>
-                                        <h4 class="card-title" disabled>Counter <%= counter[i].counterNum %></h4>
+                                        <% if (counter[i].counterType == 'premium') { %>
+                                            <h4 class="card-title">Premium Counter <%= counter[i].counterNum %></h4>
+                                        <% } else { %>
+                                            <h4 class="card-title">Counter <%= counter[i].counterNum %></h4>
+                                        <% } %>                                        
                                         <input class="form-control-plaintext" type="text" value="Offline" readonly="" disabled>
                                     </div>
                                 </div>
@@ -67,7 +72,11 @@
                                 <div class="card" id="cardCounter1">
                                     <div class="card-body">
                                         <div id="circleCounter1" style="background: #2be928;border-radius: 50%;width: 15px;height: 15px;margin-left: 93%;"></div>
-                                        <h4 class="card-title" >Counter <%= counter[i].counterNum %></h4>
+                                        <% if (counter[i].counterType == 'premium') { %>
+                                            <h4 class="card-title">Premium Counter <%= counter[i].counterNum %></h4>
+                                        <% } else { %>
+                                            <h4 class="card-title">Counter <%= counter[i].counterNum %></h4>
+                                        <% } %>                                            
                                         <input class="form-control-plaintext" type="text" value="Available" readonly="">
                                     </div>
                                 </div>
@@ -76,7 +85,11 @@
                                 <div class="card" id="cardCounter1" >
                                     <div class="card-body">    
                                         <div id="circleCounter1" style="background: #ee1818ea;border-radius: 50%;width: 15px;height: 15px;margin-left: 93%;"></div>
-                                        <h4 class="card-title" >Counter <%= counter[i].counterNum %></h4>
+                                        <% if (counter[i].counterType == 'premium') { %>
+                                            <h4 class="card-title">Premium Counter <%= counter[i].counterNum %></h4>
+                                        <% } else { %>
+                                            <h4 class="card-title">Counter <%= counter[i].counterNum %></h4>
+                                        <% } %>                                            
                                         <input class="form-control-plaintext" type="text" value="<%= counter[i].ticketServing %>" readonly="">
                                     </div>
                                 </div>  
@@ -89,7 +102,6 @@
     </div>
 
     <form id="customer_view_refresh" action="/customer_view" method="GET"></form>
-
     <script src="/public/assets/bootstrap/js/bootstrap.min.js"></script>
 
     <!--Refresh customer view in interval-->

@@ -14,13 +14,26 @@ let counter
 let message
 
 class Ticket {
-   constructor() {
+   constructor(ticketType) {
        this._ticketNum = 1000 + ticketCounter
        ticketCounter++
        this._ticketStatus = 'pending'
        this._counterAssigned = 0
+       this._ticketType = ticketType
    }
 };
+
+class Low_Category_Ticket extends Ticket{
+   constructor() {
+      super("low")
+   }
+}
+
+class Premium_Category_Ticket extends Ticket{
+   constructor() {
+      super("premium")
+   }
+}
 
 // Static Routes
 // default customer route
@@ -34,23 +47,34 @@ router.get("/customer_view", async (request, response) => {
          message : null
       })
    } catch (err) {
-      response.status(403).json("" + err)
+      response.json("Error: " + err)
    }
 })
 
 //Router that adds new tickets to queue
 router.post("/customer_view/customertakeNumber", async (request, response) => {
    try {
+      //await ticketCollection.deleteMany({})
+      let result, newTicket
+         //Create Low Category Ticket
+         if (request.body.ticketCategory === 'low') {
+             newTicket = await new Low_Category_Ticket();
+         }         
+         //Create Premium Category Ticket
+         else if (request.body.ticketCategory === 'premium'){
+            newTicket = await new Premium_Category_Ticket();
+         }
+
          //Create a new ticket obj instance and insert document into ticket collection
-         let newTicket = new Ticket();
-         let result =new ticketCollection({
+         result = await new ticketCollection({
             ticketNum :  newTicket._ticketNum,
             ticketStatus : newTicket._ticketStatus,
+            ticketType : newTicket._ticketType,
             counterAssigned : newTicket._counterAssigned
          })
          result.save((err) => {
             if(err) {
-               console.log("Something went wrong");
+               console.log("Ticket not added");
             }
          });
 
@@ -66,7 +90,7 @@ router.post("/customer_view/customertakeNumber", async (request, response) => {
          });
    }
    catch (err) {
-      response.status(403).json("" + err)
+      response.json("" + err)
    }
 })
 
@@ -79,7 +103,7 @@ router.route("/counter_management_view")
       counter : counter
    })
    } catch (err) {
-      response.status(403).json("" + error)
+      response.json("" + error)
    }
 })
 
@@ -117,23 +141,52 @@ router.put('/counter_management_view/setOnlineOffline/:counterNum', async(reques
          message : message
       })   
    } catch (err) {
-      response.status(403).json("" + err)
+      response.json("" + err)
    }
 })
 
 //Router to call the next customer to counter
 router.put('/counter_management_view/callNext/:counterNum', async(request, response) =>{
    try {
+      let nextTicket
       let currCounter = await counterCollection.findOne({counterNum: request.params.counterNum})
 
       //When counter is vacant
       if (currCounter.counterStatus === 'online') {
-         //Find and update 1st customer/ticket in queue
-         let nextTicket = await ticketCollection.findOneAndUpdate(
-            {ticketStatus: "pending"} , { ticketStatus: "serving"}
-         ).sort(
-            {ticketNum: 1}
-         )
+
+         //For counter serving low cateogry tickets
+         if (currCounter.counterType === 'low') {
+            //Find and update 1st low category customer/ticket in queue
+            nextTicket = await ticketCollection.findOneAndUpdate(
+               { ticketStatus: "pending", ticketType : "low"} , 
+               { ticketStatus: "serving"}
+            ).sort(
+               {ticketNum: 1}
+            )
+         }
+         //For counter serving premium cateogry tickets
+         else if (currCounter.counterType === 'premium') {
+            //Find and update 1st premium category customer/ticket in queue
+            nextTicket = await ticketCollection.findOneAndUpdate(
+               { ticketStatus: "pending", ticketType : "premium"} , 
+               { ticketStatus: "serving"}
+            ).sort(
+               {ticketNum: 1}
+            )
+
+            //If no more premium Customer/ticket in queue
+            if (!nextTicket) {
+               //Find and update 1st low category customer/ticket in queue
+               nextTicket = await ticketCollection.findOneAndUpdate(
+                  { ticketStatus: "pending", ticketType : "low"} , 
+                  { ticketStatus: "serving"}
+               ).sort(
+                  {ticketNum: 1}
+               )
+            }
+         }
+
+        
 
          //When there are customer/ticket are in queue
          if (nextTicket) {
@@ -175,7 +228,7 @@ router.put('/counter_management_view/callNext/:counterNum', async(request, respo
          })
       }
    }catch(error) {
-      response.status(403).json("" + error)
+      response.json("" + error)
    }
 })
 
@@ -212,7 +265,6 @@ router.put('/counter_management_view/completeCurr/:counterNum', async(request, r
          message : null
       })
    }
-
 })
 
 //Export router module. Any other file that runs require('./routes/ticketCounterRoute.js') will import this module.

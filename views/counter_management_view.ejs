@@ -24,8 +24,11 @@
                 <div class="col">
                     <div class="card" >
                         <div class="card-body">  
+                            <% if (counter[i].counterType == 'premium') { %>
+                            <h4 class="card-title">Premium Counter <%= counter[i].counterNum %></h4>
+                            <% } else { %>
                             <h4 class="card-title">Counter <%= counter[i].counterNum %></h4>
-                            
+                            <% } %>
                                 <div class="col">
                                         <% if (counter[i].counterStatus == "offline") { %>
                                         <div class="row">
@@ -97,7 +100,6 @@
         </div>
     </div>
     <script src="/public/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/public/assets/bootstrap/js/customer_view.js"></script>
 </body>
 
 </html>
