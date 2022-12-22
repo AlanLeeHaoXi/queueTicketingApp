@@ -1,5 +1,5 @@
 # Queue Ticketing Web Application
-A simple ticket counter website with with two separate views one for the customer and the counter manager.
+- A simple ticket counter website with with two separate views one for the customer and the counter manager.
 - Web app developed using HTML, CSS, Bootstrap, EJS. ExpressJS and Javascript and follows the Model-View-Controller design pattern.
 - Web app hosted on heroku web hosting service. 
 
