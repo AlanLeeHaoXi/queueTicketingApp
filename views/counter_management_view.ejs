@@ -14,79 +14,79 @@
         <div class="alert alert-danger py-2"><strong><%= message %></strong></div>
     <% } %>
 
-    <div class="container" style="width: 100%;margin-top: 50px;">
+    <div class="container" style="width: 100%; margin-top: 50px;">
         <h3>Counter Management</h3>
     </div>
     <div class="container">
-        <div class="row text-center" style="margin-top: 20px;">
+        <div class="row text-center" style="margin-top: 20px; ">
         <% if (locals.counter != null) { %>
             <% for(let i = 0; i < counter.length; i++) { %>
-                <div class="col">
+                <div class="col" style="padding: 10px;">
                     <div class="card" >
                         <div class="card-body">  
                             <% if (counter[i].counterType == 'premium') { %>
-                            <h4 class="card-title">Premium Counter <%= counter[i].counterNum %></h4>
+                            <h4 class="card-title" style="padding: 0px 0px 10px 0px;">Premium Counter <%= counter[i].counterNum %></h4>
                             <% } else { %>
-                            <h4 class="card-title">Counter <%= counter[i].counterNum %></h4>
+                            <h4 class="card-title" style="padding: 0px 0px 10px 0px;">Counter <%= counter[i].counterNum %></h4>
                             <% } %>
                                 <div class="col">
                                         <% if (counter[i].counterStatus == "offline") { %>
                                         <div class="row">
                                             <form action="/counter_management_view/setOnlineOffline/<%=counter[i].counterNum %>?_method=PUT" method="POST"> 
                                                 <input type="hidden" name="updateStatus" value="online">
-                                                <button class="btn btn-primary btn-sm" type="submit">Go Online</button>
+                                                <button class="btn btn-primary btn-sm" type="submit"  style="width: 100px;">Go Online</button>
                                             </form>
                                         </div>
                                         <div class="row">
                                             <div class="col" style="margin-top: 10px;">
                                             <form action="/counter_management_view/completeCurr/<%=counter[i].counterNum %>?_method=PUT" method="POST"> 
-                                                <button class="btn btn-primary btn-sm" type="submit" value="" disabled>Complete Current<br></button>
+                                                <button class="btn btn-primary btn-sm" type="submit" value="" style="width: 100px;" disabled>Complete Current<br></button>
                                             </form>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col" style="margin-top: 10px;">
-                                                <button class="btn btn-primary btn-sm" type="submit" value="" disabled>Call Next<br></button>
+                                                <button class="btn btn-primary btn-sm" type="submit" value="" style="width: 100px;" disabled>Call Next<br></button>
                                             </div>
                                         </div>
                                         <% } else if (counter[i].counterStatus == "online") { %>
                                             <div class="row">
                                                 <form action="/counter_management_view/setOnlineOffline/<%=counter[i].counterNum %>?_method=PUT" method="POST"> 
                                                     <input type="hidden" name="updateStatus" value="offline">
-                                                    <button class="btn btn-primary btn-sm" type="submit">Go Offline</button>
+                                                    <button class="btn btn-primary btn-sm" type="submit" style="width: 100px;">Go Offline</button>
                                                 </form>
                                             </div>
                                             <div class="row">
                                                 <div class="col" style="margin-top: 10px;">
                                                     <form action="/counter_management_view/completeCurr/<%=counter[i].counterNum %>?_method=PUT" method="POST"> 
-                                                        <button class="btn btn-primary btn-sm" type="submit">Complete Current<br></button>
+                                                        <button class="btn btn-primary btn-sm" type="submit" style="width: 100px;">Complete Current<br></button>
                                                     </form>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col" style="margin-top: 10px;">
                                                     <form action="/counter_management_view/callNext/<%=counter[i].counterNum %>?_method=PUT" method="POST"> 
-                                                        <button class="btn btn-primary btn-sm" type="submit">Call Next<br></button>
+                                                        <button class="btn btn-primary btn-sm" type="submit" style="width: 100px;">Call Next<br></button>
                                                     </form>
                                                 </div>
                                             </div>
                                         <% } else if (counter[i].counterStatus == "busy") { %>
                                             <div class="row">
                                                 <form action="/counter_management_view/setOnlineOffline/<%=counter[i].counterNum %>?_method=PUT" method="POST"> 
-                                                    <button class="btn btn-primary btn-sm" type="submit">Go Offline</button>
+                                                    <button class="btn btn-primary btn-sm" type="submit" style="width: 100px;">Go Offline</button>
                                                 </form>
                                             </div>
                                             <div class="row">
                                                 <div class="col" style="margin-top: 10px;">
                                                     <form action="/counter_management_view/completeCurr/<%=counter[i].counterNum %>?_method=PUT" method="POST"> 
-                                                        <button class="btn btn-primary btn-sm" type="submit">Complete Current<br></button>
+                                                        <button class="btn btn-primary btn-sm" type="submit" style="width: 100px;">Complete Current<br></button>
                                                     </form>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col" style="margin-top: 10px;">
                                                     <form action="/counter_management_view/callNext/<%=counter[i].counterNum %>?_method=PUT" method="POST"> 
-                                                        <button class="btn btn-primary btn-sm" type="submit">Call Next<br></button>
+                                                        <button class="btn btn-primary btn-sm" type="submit" style="width: 100px;">Call Next<br></button>
                                                     </form>
                                                 </div>
                                             </div>

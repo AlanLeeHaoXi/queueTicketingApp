@@ -4,6 +4,7 @@
     const ejs = require('ejs');
     const cors = require('cors')
     const mongoose = require('mongoose')
+    
     const methodOverride = require('method-override')
 
     //Import data schema 
@@ -39,6 +40,7 @@
         
     //Connect to mongoDB altas
     try {
+        mongoose.set('strictQuery', true);
         mongoose.connect("mongodb+srv://admin:admin@mongodbchartcluster.0tbkz.mongodb.net/queueTicketingApp?retryWrites=true&w=majority", 
         {useNewUrlParser: true, useUnifiedTopology: true})
         console.log("Connected to mongoDB")
